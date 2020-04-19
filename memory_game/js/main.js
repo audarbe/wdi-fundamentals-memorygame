@@ -22,24 +22,60 @@ let cards = [
 		},
 	];
 let cardsInPlay = [];
+let playerScore = 0;
+
+function resetBoard () {
+	//I would have removed .game-board but the page jumped around. So I removed images instead.
+	let cardsNodeList = document.querySelectorAll('img');
+	for (j = 0; j < cards.length; j++) {
+		let cardToRemove = cardsNodeList[j]
+		cardToRemove.remove()
+		cardsInPlay = [];
+	};
+	createBoard();
+}
+
+function createBoard() {
+	for (i = 0; i < cards.length; i++) {
+		let cardElement = document.createElement('img');
+		cardElement.setAttribute('src', 'images/back.png');
+		cardElement.setAttribute('data-id', i);
+		cardElement.addEventListener('click', flipCard);
+		document.getElementById('game-board').appendChild(cardElement);
+	}
+	//Load reset button
+	let resetButton = document.getElementById('reset-button');
+	resetButton.addEventListener('click', resetBoard);
+};
+
+function flipCard() {
+	let cardId = this.getAttribute('data-id');
+	this.setAttribute('src', cards[cardId].cardImage); 
+	cardsInPlay.push(cards[cardId].rank);
+ 	checkForMatch();
+};
 
 function checkForMatch() {
 	if (cardsInPlay.length === 2) {
 		if (cardsInPlay[0] === cardsInPlay[1]) {
-			alert("You found a match!");
+			playerScore += 1;	
 		} else {
-			alert('Sorry, try again!')
+			playerScore = 0;
 		};
+	updateScore();	
+	};
+
+};
+
+function updateScore() {
+	let scoreBoard = document.getElementById('score');
+	if (playerScore > 1) {
+		scoreBoard.innerHTML = `You got ${playerScore} in a row!`
+	} else if (playerScore === 1) {
+		scoreBoard.innerHTML = `Oooh you got ${playerScore} right!`
+	} else {
+		scoreBoard.innerHTML = `Not so smart...`
 	};
 };
 
-function flipCard(cardId) {
-	console.log("User Flipped: " + cards[cardId].rank);
-	cardsInPlay.push(cards[cardId].rank);
-	checkForMatch();
-	console.log(cards[cardId].rank)
-	console.log(cards[cardId].cardImage)
-};
-
-flipCard(0);
-flipCard(1);
+createBoard();

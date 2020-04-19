@@ -94,6 +94,19 @@ img {
   margin: 40px 8px 0;
 }
 
+button {
+  background-color: #00A6B3;
+  font-family: Raleway;
+  font-size: 18px;
+  padding: 15px 20px;
+  border: none;
+  color: white;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: .06em;
+}
+
 /* =============================
 FOOTER
 ================================ */
@@ -105,7 +118,6 @@ footer {
   font-size: 14px;
   letter-spacing: .08em;
   font-weight: 500;
-
 }
 
 .copyright {
